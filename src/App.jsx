@@ -1,110 +1,35 @@
-import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider, useAuth } from "./Context/AuthContext";
-import Login from "./Pages/Login";
-import Register from "./Pages/Register";
-import Home from "./Pages/Home";
-import Default from "./Pages/Default";
-import AddProduct from "./Pages/AddProducts";
-import Products from "./Pages/Products";
-import Navbar from "./components/Navbar";
-import Cart from "./Pages/Cart";
-import EditProduct from "./Pages/EditProduct";
-
-function PrivateRoute({ children }) {
-  return localStorage.getItem("isAuthenticatedd") === "true" ? (
-    <>{children}</>
-  ) : (
-    <Navigate to="/login" />
-  );
-}
-
-function PublicRoute({ children }) {
-  return localStorage.getItem("isAuthenticatedd") !== "true" ? (
-    <>{children}</>
-  ) : (
-    <Navigate to="/home" />
-  );
-}
-
-function AppRoutes() {
-  return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <PublicRoute>
-            <Default />
-          </PublicRoute>
-        }
-      />
-      <Route
-        path="/login"
-        element={
-          <PublicRoute>
-            <Login />
-          </PublicRoute>
-        }
-      />
-      <Route
-        path="/register"
-        element={
-          <PublicRoute>
-            <Register />
-          </PublicRoute>
-        }
-      />
-      <Route
-        path="/home"
-        element={
-          <PrivateRoute>
-            <Home />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/products"
-        element={
-          <PrivateRoute>
-            <Products />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/cart"
-        element={
-          <PrivateRoute>
-            <Cart />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/product/add"
-        element={
-          <PrivateRoute>
-            <AddProduct />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/products/edit/:id"
-        element={
-          <PrivateRoute>
-            <EditProduct />
-          </PrivateRoute>
-        }
-      />
-    </Routes>
-  );
-}
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
 function App() {
+  const [count, setCount] = useState(0)
+
   return (
-    <BrowserRouter>
-      <Navbar />
-      <AppRoutes />
-    </BrowserRouter>
-  );
+    <>
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.jsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
+  )
 }
 
-export default App;
+export default App
